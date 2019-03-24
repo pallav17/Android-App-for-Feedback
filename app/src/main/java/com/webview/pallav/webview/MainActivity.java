@@ -7,6 +7,7 @@ import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 public class MainActivity extends AppCompatActivity {
@@ -26,11 +27,20 @@ public class MainActivity extends AppCompatActivity {
 
         WebSettings webSettings = webView.getSettings();
         webSettings.setJavaScriptEnabled(true);
+        webView.setWebChromeClient(new WebChromeClient());
+        webSettings.setDomStorageEnabled(true);
+        webSettings.setLoadWithOverviewMode(true);
+        webSettings.setUseWideViewPort(true);
+        webSettings.setBuiltInZoomControls(true);
+        webSettings.setDisplayZoomControls(false);
+        webSettings.setSupportZoom(true);
+        webSettings.setDefaultTextEncodingName("utf-8");
 
         WebViewClientImpl webViewClient = new WebViewClientImpl(this);
         webView.setWebViewClient(webViewClient);
 
         webView.loadUrl("http://www.journaldev.com");
+
         //webView.loadData("<html><body>Hello, world!</body></html>", "text/html", "UTF-8");
     }
 
@@ -59,6 +69,7 @@ public class MainActivity extends AppCompatActivity {
        switch (item.getItemId()) {
            case R.id.refresh:  {
                webView.reload();
+               return true;
            }
            case android.R.id.home: {
                if(webView.canGoBack()) {
@@ -66,6 +77,7 @@ public class MainActivity extends AppCompatActivity {
                }else {
                   finish();
                }
+               return true;
            }
        }
        return super.onOptionsItemSelected(item);
