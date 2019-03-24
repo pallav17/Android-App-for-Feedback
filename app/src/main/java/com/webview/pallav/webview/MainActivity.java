@@ -1,13 +1,15 @@
 package com.webview.pallav.webview;
 
-import android.annotation.SuppressLint;
-import android.app.Activity;
+import android.app.ActionBar;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.KeyEvent;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
-import android.webkit.WebViewClient;
-public class MainActivity extends Activity {
+public class MainActivity extends AppCompatActivity {
 
     private WebView webView = null;
 
@@ -17,6 +19,10 @@ public class MainActivity extends Activity {
         setContentView(R.layout.activity_main);
 
         this.webView = (WebView) findViewById(R.id.activity_main_webview);
+
+       android.support.v7.app.ActionBar actionBar = getSupportActionBar();
+       getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+       getSupportActionBar().setHomeButtonEnabled(true);
 
         WebSettings webSettings = webView.getSettings();
         webSettings.setJavaScriptEnabled(true);
@@ -39,4 +45,29 @@ public class MainActivity extends Activity {
         return super.onKeyDown(keyCode, event);
     }
 
+
+   //Inflating Menu for action bar
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.wv_menu,menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+       switch (item.getItemId()) {
+           case R.id.refresh:  {
+               webView.reload();
+           }
+           case android.R.id.home: {
+               if(webView.canGoBack()) {
+                   webView.goBack();
+               }else {
+                  finish();
+               }
+           }
+       }
+       return super.onOptionsItemSelected(item);
+    }
 }
