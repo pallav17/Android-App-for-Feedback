@@ -39,7 +39,7 @@ public class MainActivity extends AppCompatActivity {
         WebViewClientImpl webViewClient = new WebViewClientImpl(this);
         webView.setWebViewClient(webViewClient);
 
-        webView.loadUrl("http://www.journaldev.com");
+        webView.loadUrl("http://www.google.com");
 
         //webView.loadData("<html><body>Hello, world!</body></html>", "text/html", "UTF-8");
     }
